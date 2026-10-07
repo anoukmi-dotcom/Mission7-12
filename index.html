@@ -1,0 +1,327 @@
+app_specification:
+  version: "1.0.0"
+  title: "LexiPulse - Frans Woordenschat Trainer"
+  subtitle: "Interactieve Flashcards & Quizzen voor Mission 7 t/m 12"
+  target_audience: "Basisschool / Middelbare school studenten (Nederlandstalig lerend Frans)"
+  architecture: "Single Monolithic HTML file (vanilla JS or inline React + Tailwind CSS CDN)"
+
+brand_and_theme:
+  name: "Vibrant Palette"
+  aesthetic: "Playful, tactile, high-contrast, gamified duotone neo-brutalism with thick borders and 3D offset drop shadows"
+  fonts:
+    body: "Inter, ui-sans-serif, system-ui, sans-serif"
+    display: "Space Grotesk, sans-serif"
+    google_fonts_url: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@500;700;900&display=swap"
+  colors:
+    background_main: "#FFFAF0" # Warm creamy pastel eggshell
+    text_primary: "#111827" # Gray 900
+    text_secondary: "#4B5563" # Gray 600
+    text_muted: "#9CA3AF" # Gray 400
+    accents:
+      orange:
+        primary: "#F97316" # Orange 500
+        dark_border: "#EA580C" # Orange 600
+        surface: "#FFEDD5" # Orange 100
+        shadow: "#FED7AA" # Orange 200 shadow
+      yellow:
+        primary: "#FACC15" # Yellow 400
+        dark_border: "#EAB308" # Yellow 500
+        surface: "#FEF9C3" # Yellow 100
+        shadow: "#FEF08A" # Yellow 200 shadow
+      green:
+        primary: "#22C55E" # Green 500
+        dark_border: "#16A34A" # Green 600
+        surface: "#DCFCE7" # Green 100
+        bottom_shadow: "#166534" # Green 800
+      red:
+        primary: "#EF4444" # Red 500
+        dark_border: "#DC2626" # Red 600
+        surface: "#FEE2E2" # Red 100
+        bottom_shadow: "#991B1B" # Red 800
+      blue:
+        primary: "#3B82F6" # Blue 500
+        dark_border: "#2563EB" # Blue 600
+        surface: "#DBEAFE" # Blue 100
+        bottom_shadow: "#1E40AF" # Blue 800
+      pink:
+        primary: "#EC4899" # Pink 500
+        surface: "#FCE7F3" # Pink 100
+        shadow: "#FBCFE8"
+  ui_conventions:
+    card_border_width: "border-[6px] or border-4"
+    border_radius: "rounded-[36px] or rounded-[48px] for flashcards; rounded-3xl for buttons; rounded-2xl for chips"
+    shadow_style: "Solid 3D offset shadow (e.g. shadow-[0_8px_0_#C2410C] or shadow-[0_4px_0_#FED7AA]) instead of blurred drop shadows"
+
+css_utilities:
+  perspective: "perspective: 1000px;"
+  preserve_3d: "transform-style: preserve-3d;"
+  backface_hidden: "backface-visibility: hidden; -webkit-backface-visibility: hidden;"
+  rotate_y_180: "transform: rotateY(180deg);"
+  card_stack_layers:
+    layer_3: "absolute inset-0 bg-orange-100 rounded-[48px] translate-x-3 translate-y-3 border-2 border-orange-200"
+    layer_2: "absolute inset-0 bg-yellow-100 rounded-[48px] translate-x-1.5 translate-y-1.5 border-2 border-yellow-200"
+    layer_top: "relative w-full max-w-[560px] min-h-[360px] bg-white border-[6px] border-yellow-400 rounded-[48px] shadow-xl p-8 flex flex-col items-center justify-center text-center"
+
+speech_synthesis:
+  engine: "Web Speech API (window.speechSynthesis)"
+  lang: "fr-FR"
+  rate: 0.85
+  voice_filter: "Prefer voice with lang starting with 'fr'"
+  sanitization: "Remove parentheses and trailing punctuation prior to speaking"
+
+gamification_and_state:
+  storage_keys:
+    stats: "anouk_vocab_stats"
+    quiz_high: "anouk_vocab_quiz_high"
+    spelling_high: "anouk_vocab_spell_high"
+  metrics:
+    streak:
+      increment_condition: "Recorded activity on consecutive calendar days"
+      reset_condition: "Break of more than 1 day between sessions"
+    mastered_ids: "Array of vocabulary IDs marked as mastered"
+    learning_ids: "Array of vocabulary IDs marked as needing practice"
+  modes:
+    1_flashcards:
+      description: "Flip card 3D on click. Shows French target on front, Dutch translation on back. Grade buttons: 'Opnieuw / Again' (Red), 'Moeilijk / Hard' (Orange), 'Goed / Good' (Green), 'Makkelijk / Easy' (Blue). Includes audio pronunciation button."
+    2_quiz:
+      description: "Multiple choice (4 options). 10 questions per run. Calculates percentage score, provides instant green/red tactile feedback."
+    3_spelling:
+      description: "Listen to pronunciation or view Dutch prompt and type the exact French word (accents lenient or guided)."
+    4_list:
+      description: "Searchable dictionary table filtering by mission, mastery status, and search keywords with audio buttons."
+
+missions:
+  - id: 7
+    name: "Mission 7"
+    title: "Quelle est ton adresse?"
+    desc: "Persoonlijke info, maanden en adressen"
+    color: "from-amber-400 to-orange-500"
+  - id: 8
+    name: "Mission 8"
+    title: "Tu manges quoi?"
+    desc: "Eten, drinken, fruit en groenten"
+    color: "from-lime-400 to-green-500"
+  - id: 9
+    name: "Mission 9"
+    title: "Ta famille est comment?"
+    desc: "Familieleden, huisdieren en eigenschappen"
+    color: "from-pink-400 to-rose-500"
+  - id: 10
+    name: "Mission 10"
+    title: "Voilà mon école!"
+    desc: "School, uren, tijdstippen en werkwoorden"
+    color: "from-sky-400 to-blue-500"
+  - id: 11
+    name: "Mission 11"
+    title: "Tu achètes quoi?"
+    desc: "Winkelen, prijzen, getallen en voeding"
+    color: "from-violet-400 to-purple-500"
+  - id: 12
+    name: "Mission 12"
+    title: "Les super vacances!"
+    desc: "Vakantie, reizen, talen en landen"
+    color: "from-teal-400 to-emerald-500"
+
+vocabulary:
+  mission_7:
+    - { id: "m7_age", french: "un âge", dutch: "een leeftijd" }
+    - { id: "m7_anniversaire", french: "un anniversaire", dutch: "een verjaardag" }
+    - { id: "m7_appartement", french: "un appartement", dutch: "een appartement" }
+    - { id: "m7_mois", french: "un mois", dutch: "een maand" }
+    - { id: "m7_nom", french: "un nom", dutch: "een naam" }
+    - { id: "m7_numéro", french: "un numéro", dutch: "een nummer" }
+    - { id: "m7_prénom", french: "un prénom", dutch: "een voornaam" }
+    - { id: "m7_téléphone", french: "un téléphone", dutch: "een telefoon" }
+    - { id: "m7_adresse", french: "une adresse", dutch: "een adres" }
+    - { id: "m7_maison", french: "une maison", dutch: "een huis" }
+    - { id: "m7_donner", french: "donner", dutch: "geven" }
+    - { id: "m7_habiter", french: "habiter", dutch: "wonen" }
+    - { id: "m7_alors", french: "alors", dutch: "dus / toen" }
+    - { id: "m7_bien", french: "bien", dutch: "goed" }
+    - { id: "m7_chez_moi", french: "chez moi", dutch: "bij mij thuis" }
+    - { id: "m7_pour_toi", french: "pour toi", dutch: "voor jou" }
+    - { id: "m7_peut_être", french: "peut-être", dutch: "misschien" }
+    - { id: "m7_pourquoi", french: "pourquoi?", dutch: "waarom?" }
+    - { id: "m7_quand", french: "quand?", dutch: "wanneer?" }
+    - { id: "m7_quel", french: "quel, quelle?", dutch: "welk, welke?" }
+    - { id: "m7_bientot", french: "À bientôt!", dutch: "Tot binnenkort!" }
+    - { id: "m7_demain", french: "À demain", dutch: "Tot morgen!" }
+    - { id: "m7_a_la_maison", french: "à la maison", dutch: "thuis" }
+    - { id: "m7_allo", french: "Allo!", dutch: "Hallo! (telefoon)" }
+    - { id: "m7_ca_va", french: "(Comment) ça va?", dutch: "Hoe gaat het?" }
+    - { id: "m7_ca_va_bien", french: "ça va bien.", dutch: "het gaat goed." }
+    - { id: "m7_daccord", french: "D'accord!", dutch: "Akkoord! / Oké!" }
+    - { id: "m7_bruxelles", french: "J'habite à Bruxelles.", dutch: "Ik woon in Brussel." }
+    - { id: "m7_adresse_num", french: "J'habite rue de la Poste au numéro 6.", dutch: "Ik woon in de Poststraat op nummer 6." }
+    - { id: "m7_madame", french: "madame", dutch: "mevrouw" }
+    - { id: "m7_monsieur", french: "monsieur", dutch: "meneer" }
+    - { id: "m7_quel_nom", french: "Quel est ton nom?", dutch: "Wat is je naam?" }
+    - { id: "m7_janvier", french: "janvier", dutch: "januari" }
+    - { id: "m7_fevrier", french: "février", dutch: "februari" }
+    - { id: "m7_mars", french: "mars", dutch: "maart" }
+    - { id: "m7_avril", french: "avril", dutch: "april" }
+    - { id: "m7_mai", french: "mai", dutch: "mei" }
+    - { id: "m7_juin", french: "juin", dutch: "juni" }
+    - { id: "m7_juillet", french: "juillet", dutch: "juli" }
+    - { id: "m7_aout", french: "aout", dutch: "augustus" }
+    - { id: "m7_septembre", french: "septembre", dutch: "september" }
+    - { id: "m7_octobre", french: "octobre", dutch: "oktober" }
+    - { id: "m7_novembre", french: "novembre", dutch: "november" }
+    - { id: "m7_decembre", french: "décembre", dutch: "december" }
+
+  mission_8:
+    - { id: "m8_beurre", french: "le beurre", dutch: "de boter" }
+    - { id: "m8_champignon", french: "un champignon", dutch: "een champignon" }
+    - { id: "m8_coca", french: "un coca", dutch: "een cola" }
+    - { id: "m8_fromage", french: "le fromage", dutch: "de kaas" }
+    - { id: "m8_fruit", french: "un fruit", dutch: "een fruit / een stuk fruit" }
+    - { id: "m8_jambon", french: "le jambon", dutch: "de ham" }
+    - { id: "m8_jus_fruits", french: "un jus de fruit(s)", dutch: "een vruchtensap" }
+    - { id: "m8_kiwi", french: "un kiwi", dutch: "een kiwi" }
+    - { id: "m8_lait", french: "le lait", dutch: "de melk" }
+    - { id: "m8_legume", french: "un légume", dutch: "een groente" }
+    - { id: "m8_oeuf", french: "un oeuf", dutch: "een ei" }
+    - { id: "m8_pain", french: "un pain", dutch: "een brood" }
+    - { id: "m8_poisson", french: "un poisson", dutch: "een vis" }
+    - { id: "m8_banane", french: "une banane", dutch: "een banaan" }
+    - { id: "m8_carotte", french: "une carotte", dutch: "een wortel" }
+    - { id: "m8_eau", french: "l'eau", dutch: "het water" }
+    - { id: "m8_limonade", french: "une limonade", dutch: "een limonade" }
+    - { id: "m8_orange", french: "une orange", dutch: "een sinaasappel / appelsien" }
+    - { id: "m8_poire", french: "une poire", dutch: "een peer" }
+    - { id: "m8_pomme", french: "une pomme", dutch: "een appel" }
+    - { id: "m8_pomme_terre", french: "une pomme de terre", dutch: "een aardappel" }
+    - { id: "m8_salade", french: "une salade", dutch: "een sla / salade" }
+    - { id: "m8_tomate", french: "une tomate", dutch: "een tomaat" }
+    - { id: "m8_bon", french: "bon, bonne", dutch: "goed / lekker" }
+    - { id: "m8_boire", french: "boire", dutch: "drinken" }
+    - { id: "m8_manger", french: "manger", dutch: "eten" }
+    - { id: "m8_prendre", french: "prendre", dutch: "nemen" }
+    - { id: "m8_faim", french: "J'ai faim.", dutch: "Ik heb honger." }
+    - { id: "m8_soif", french: "J'ai soif.", dutch: "Ik heb dorst." }
+
+  mission_9:
+    - { id: "m9_chat", french: "un chat", dutch: "een kat" }
+    - { id: "m9_chien", french: "un chien", dutch: "een hond" }
+    - { id: "m9_fils", french: "un fils", dutch: "een zoon" }
+    - { id: "m9_frere", french: "un frère", dutch: "een broer" }
+    - { id: "m9_grandsparents", french: "des grands-parent", dutch: "grootouders" }
+    - { id: "m9_grandpere", french: "un grand-père", dutch: "een grootvader / opa" }
+    - { id: "m9_lapin", french: "un lapin", dutch: "een konijn" }
+    - { id: "m9_oncle", french: "un oncle", dutch: "een oom / nonkel" }
+    - { id: "m9_parents", french: "des parent", dutch: "ouders" }
+    - { id: "m9_papa", french: "un papa", dutch: "een papa" }
+    - { id: "m9_pere", french: "un père", dutch: "een vader" }
+    - { id: "m9_famille", french: "une famille", dutch: "een familie / gezin" }
+    - { id: "m9_fille", french: "une fille", dutch: "une dochter / meisje" }
+    - { id: "m9_flandre", french: "la Flandre", dutch: "Vlaanderen" }
+    - { id: "m9_grandmere", french: "une grand-mère", dutch: "een grootmoeder / oma" }
+    - { id: "m9_maman", french: "une maman", dutch: "een mama" }
+    - { id: "m9_mere", french: "une mère", dutch: "een moeder" }
+    - { id: "m9_soeur", french: "une soeur", dutch: "een zus" }
+    - { id: "m9_tante", french: "une tante", dutch: "een tante" }
+    - { id: "m9_wallonie", french: "la Wallonie", dutch: "Wallonië" }
+    - { id: "m9_gentil", french: "gentil, gentille", dutch: "lief / aardig" }
+    - { id: "m9_sympa", french: "sympa", dutch: "sympathiek / tof" }
+    - { id: "m9_en_flandre", french: "en Flandre", dutch: "in Vlaanderen" }
+    - { id: "m9_beaucoup", french: "beaucoup", dutch: "veel" }
+    - { id: "m9_peu", french: "peu", dutch: "weinig" }
+    - { id: "m9_tres", french: "très", dutch: "heel / erg" }
+    - { id: "m9_penser", french: "penser (à)", dutch: "denken (aan)" }
+    - { id: "m9_venir", french: "venir", dutch: "komen" }
+    - { id: "m9_sappelle", french: "Il/elle s'appelle Jo.", dutch: "Hij/zij heet Jo." }
+
+  mission_10:
+    - { id: "m10_francais", french: "le français", dutch: "het Frans" }
+    - { id: "m10_matin", french: "le matin", dutch: "de ochtend / 's morgens" }
+    - { id: "m10_midi", french: "midi", dutch: "de middag / twaalf uur 's middags" }
+    - { id: "m10_mot", french: "un mot", dutch: "een woord" }
+    - { id: "m10_neerlandais", french: "le néerlandais", dutch: "het Nederlands" }
+    - { id: "m10_soir", french: "le soir", dutch: "de avond / 's avonds" }
+    - { id: "m10_temps", french: "le temps", dutch: "de tijd / het weer" }
+    - { id: "m10_apres_midi", french: "l'après midi", dutch: "de namiddag / 's namiddags" }
+    - { id: "m10_directeur", french: "un directeur", dutch: "een directeur" }
+    - { id: "m10_directrice", french: "une directrice", dutch: "een directrice" }
+    - { id: "m10_faute", french: "une faute", dutch: "een fout" }
+    - { id: "m10_heure", french: "une heure", dutch: "een uur" }
+    - { id: "m10_journee", french: "une journée", dutch: "een dag / overdag" }
+    - { id: "m10_lecon", french: "une leçon", dutch: "een les" }
+    - { id: "m10_minute", french: "une minute", dutch: "een minuut" }
+    - { id: "m10_phrase", french: "une phrase", dutch: "een zin" }
+    - { id: "m10_seconde", french: "une seconde", dutch: "een seconde" }
+    - { id: "m10_tartine", french: "une tartine", dutch: "een boterham" }
+    - { id: "m10_commencer", french: "commencer", dutch: "beginnen" }
+    - { id: "m10_ecrire", french: "écrire", dutch: "schrijven" }
+    - { id: "m10_lire", french: "lire", dutch: "lezen" }
+    - { id: "m10_parler", french: "parler", dutch: "spreken / praten" }
+    - { id: "m10_travailler", french: "travailler", dutch: "werken" }
+    - { id: "m10_apres", french: "après", dutch: "na" }
+    - { id: "m10_avant", french: "avant", dutch: "voor (tijd)" }
+    - { id: "m10_sans", french: "sans", dutch: "zonder" }
+    - { id: "m10_a_midi", french: "à midi", dutch: "'s middags / om twaalf uur" }
+    - { id: "m10_quel_heure_q", french: "À quelle heure?", dutch: "Om hoe laat?" }
+    - { id: "m10_six_heures", french: "à six heures", dutch: "om zes uur" }
+    - { id: "m10_heure_q", french: "Il est quelle heure?", dutch: "Hoe laat is het?" }
+    - { id: "m10_est_une_heure", french: "Il est une heure.", dutch: "Het is een uur." }
+
+  mission_11:
+    - { id: "m11_cent", french: "un cent", dutch: "een cent" }
+    - { id: "m11_chocolat", french: "le chocolat", dutch: "de chocolade" }
+    - { id: "m11_croissant", french: "un croissant", dutch: "een croissant" }
+    - { id: "m11_euro", french: "un euro", dutch: "een euro" }
+    - { id: "m11_gramme", french: "un gramme", dutch: "een gram" }
+    - { id: "m11_kilo", french: "un kilo", dutch: "een kilo" }
+    - { id: "m11_prix", french: "un prix", dutch: "een prijs" }
+    - { id: "m11_sucre", french: "le sucre", dutch: "de suiker" }
+    - { id: "m11_supermarche", french: "un supermarché", dutch: "een supermarkt" }
+    - { id: "m11_baguette", french: "une baguette", dutch: "een stokbrood" }
+    - { id: "m11_bouteille", french: "une bouteille", dutch: "een fles" }
+    - { id: "m11_caisse", french: "la caisse", dutch: "de kassa" }
+    - { id: "m11_charcuterie", french: "la charcuterie", dutch: "fijne vleeswaren / charcuterie" }
+    - { id: "m11_confiture", french: "la confiture", dutch: "jam / confituur" }
+    - { id: "m11_glace", french: "une glace", dutch: "een ijsje" }
+    - { id: "m11_soupe", french: "la soupe", dutch: "de soep" }
+    - { id: "m11_viande", french: "la viande", dutch: "het vlees" }
+    - { id: "m11_combien", french: "combien?", dutch: "hoeveel?" }
+    - { id: "m11_encore", french: "encore", dutch: "nog" }
+    - { id: "m11_maintenant", french: "maintenant", dutch: "nu" }
+    - { id: "m11_mais", french: "mais", dutch: "maar" }
+    - { id: "m11_acheter", french: "acheter", dutch: "kopen" }
+    - { id: "m11_payer", french: "payer", dutch: "betalen" }
+    - { id: "m11_vouloir", french: "vouloir", dutch: "willen" }
+    - { id: "m11_ferme", french: "fermé, fermée", dutch: "gesloten" }
+    - { id: "m11_ouvert", french: "ouvert, ouverte", dutch: "open" }
+    - { id: "m11_fait_combien", french: "Ça fait combien?", dutch: "Hoeveel is het? / Hoeveel kost het?" }
+    - { id: "m11_fait_huit", french: "Ça fait huit euros.", dutch: "Dat is acht euro." }
+    - { id: "m11_cent_grammes_de", french: "cent grammes de ...", dutch: "honderd gram ..." }
+    - { id: "m11_kilo_de", french: "un kilo de ...", dutch: "een kilo ..." }
+    - { id: "m11_merci", french: "Merci beaucoup!", dutch: "Dank u wel!" }
+    - { id: "m11_voudrais", french: "Je voudrais ...", dutch: "Ik zou graag ... willen" }
+
+  mission_12:
+    - { id: "m12_avion", french: "un avion", dutch: "een vliegtuig" }
+    - { id: "m12_bateau", french: "un bateau", dutch: "een boot" }
+    - { id: "m12_train", french: "un train", dutch: "een trein" }
+    - { id: "m12_voyage", french: "un voyage", dutch: "een reis" }
+    - { id: "m12_belgique", french: "la Belgique", dutch: "België" }
+    - { id: "m12_date", french: "la date", dutch: "de datum" }
+    - { id: "m12_europe", french: "l'Europe", dutch: "Europa" }
+    - { id: "m12_france", french: "la France", dutch: "Frankrijk" }
+    - { id: "m12_vacances", french: "les vacances", dutch: "de vakantie" }
+    - { id: "m12_valise", french: "une valise", dutch: "een koffer" }
+    - { id: "m12_voiture", french: "une voiture", dutch: "een auto" }
+    - { id: "m12_chouette", french: "chouette, chouette", dutch: "leuk / tof" }
+    - { id: "m12_formidable", french: "formidable, formidable", dutch: "geweldig" }
+    - { id: "m12_interessant", french: "intéressant, intéressante", dutch: "interessant" }
+    - { id: "m12_super", french: "super, super", dutch: "super" }
+    - { id: "m12_raconter", french: "raconter", dutch: "vertellen" }
+    - { id: "m12_rentrer", french: "rentrer", dutch: "naar huis terugkeren / thuiskomen" }
+    - { id: "m12_rester", french: "rester", dutch: "blijven" }
+    - { id: "m12_trouver", french: "trouver", dutch: "vinden" }
+    - { id: "m12_en_belgique", french: "en Belgique", dutch: "in België" }
+    - { id: "m12_a_paris", french: "à Paris", dutch: "in Parijs" }
+    - { id: "m12_ou", french: "ou", dutch: "of" }
+    - { id: "m12_au_mois_de_janvier", french: "au mois de janvier", dutch: "in de maand januari" }
+    - { id: "m12_cest_chouette", french: "C'est chouette!", dutch: "Dat is leuk!" }
+    - { id: "m12_cest_interessant", french: "C'est interessant!", dutch: "Dat is interessant!" }
+    - { id: "m12_on_y_va", french: "On y va!", dutch: "We zijn weg! / Laten we gaan!" }
